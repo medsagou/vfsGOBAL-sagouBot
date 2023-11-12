@@ -1,4 +1,3 @@
-from selenium import webdriver
 
 from interaction import Account
 account = Account()
