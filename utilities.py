@@ -5,6 +5,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
+from class_fichier import  C_Fichier
+
 #
 # driver = uc.Chrome()
 # driver.get("https://www.google.com")
@@ -184,9 +186,11 @@ class Proxy_Formater:
         self.PASS = PASS
         self.format_ch()
     def format_ch(self):
-        if self.CH != "":
+        proxy = self.get_proxies()
+        if proxy!= "":
             try:
-                ch = self.CH.split(":")
+                proxy = proxy.strip()
+                ch = self.proxy.split(":")
             except:
                 print("ERROR: THE PROXY STRING IS NOT VALID")
             else:
@@ -194,5 +198,10 @@ class Proxy_Formater:
                 self.PORT = ch[1]
                 self.USER = ch[2]
                 self.PASS = ch[3]
+    def get_proxies(self):
+        proxies_file = C_Fichier(NF="proxies.txt")
+        proxies = proxies_file.Fichier_to_Liste()
+        return proxies[0] # to edit
+
 
 

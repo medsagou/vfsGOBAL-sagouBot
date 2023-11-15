@@ -91,7 +91,7 @@ class Account:
         # options.add_experimental_option('prefs', prefs) # import prefs from utilities
 
         # options.add_experimental_option('prefs', {'profile.managed_default_content_settings.javascript': 2})
-        proxy = Proxy_Formater(CH=os.getenv("PROXY"))
+        proxy = Proxy_Formater()
         # options.add_argument(f"--proxy-server={proxy.HOST}:{proxy.PORT}")
         seleniumwire_options = {
             'proxy': {
