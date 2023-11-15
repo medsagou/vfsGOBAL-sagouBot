@@ -1,10 +1,13 @@
 import time
-
+# import seleniumwire.undetected_chromedriver as uc
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
+#
+# driver = uc.Chrome()
+# driver.get("https://www.google.com")
 
 from selenium.webdriver.common.proxy import Proxy, ProxyType
 import pyautogui
@@ -64,7 +67,22 @@ def get_proxy2(ch = ""):
     print("NOTE: PROXY IS SET")
     return proxy
 
-
+def prefs():
+    prefs = {'profile.default_content_setting_values': {'cookies': 1, 'images': 2,'javascript': 2,
+                                                        'plugins': 2, 'popups': 2, 'geolocation': 2,
+                                                        'notifications': 2, 'auto_select_certificate': 2,
+                                                        'fullscreen': 2,
+                                                        'mouselock': 2, 'mixed_script': 2, 'media_stream': 2,
+                                                        'media_stream_mic': 2, 'media_stream_camera': 2,
+                                                        'protocol_handlers': 2,
+                                                        'ppapi_broker': 2, 'automatic_downloads': 2,
+                                                        'midi_sysex': 2,
+                                                        'push_messaging': 2, 'ssl_cert_decisions': 2,
+                                                        'metro_switch_to_desktop': 2,
+                                                        'protected_media_identifier': 2, 'app_banner': 2,
+                                                        'site_engagement': 2,
+                                                        'durable_storage': 2}}
+    return prefs
 def enter_proxy_auth(proxy_username, proxy_password):
     pyautogui.typewrite(proxy_username)
     pyautogui.press('tab')
@@ -152,7 +170,9 @@ def get_chromedriver(use_proxy=False, user_agent=None, proxy = ""):
     driver = webdriver.Chrome(options=chrome_options)
     return driver
 
-
+def on_connection_error(error):  # Gets called when the proxy credentials are invalid
+    print(error)
+    print("hey")
 # CLASSES
 
 class Proxy_Formater:
@@ -174,3 +194,5 @@ class Proxy_Formater:
                 self.PORT = ch[1]
                 self.USER = ch[2]
                 self.PASS = ch[3]
+
+
