@@ -190,7 +190,7 @@ class Proxy_Formater:
         if proxy!= "":
             try:
                 proxy = proxy.strip()
-                ch = self.proxy.split(":")
+                ch = proxy.split(":")
             except:
                 print("ERROR: THE PROXY STRING IS NOT VALID")
             else:

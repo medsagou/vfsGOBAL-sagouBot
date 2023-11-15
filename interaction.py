@@ -151,7 +151,6 @@ class Account:
                     renderer="Intel Iris OpenGL Engine",
                     fix_hairline=True,
                     )
-            print("NOTE: GETTING THE SITE 1")
             self.driver.get("https://visa.vfsglobal.com/mar/fr/prt/login")
         except Exception as e:
             if "Invalid proxy server credentials supplied" in str(e):
@@ -309,7 +308,6 @@ class Account:
                 EC.presence_of_element_located((By.XPATH, '//button[@disabled="true"]//span[contains(text(), " Continuer ")]'))
             )
         except Exception as err:
-            print("err01")
             try:
                 WebDriverWait(self.driver, 30).until(
                     EC.presence_of_element_located(
@@ -339,10 +337,6 @@ class Account:
             agence_mat_select = self.driver.find_element(By.XPATH, '//*[@id="mat-select-0"]')
             self.driver.execute_script("arguments[0].click();", agence_mat_select)
             options = self.driver.find_elements(By.XPATH, '//mat-option')
-            # print(len(options))
-            # for option in options:
-            #     print(option.text)
-
             while True:
                 for option in options:
                     try:
