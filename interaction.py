@@ -1,6 +1,8 @@
 # from selenium import webdriver
 import sys
 
+# import undetected_chromedriver as uc
+
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -76,6 +78,51 @@ class Account:
                 return True
 
 
+    def get_driver2(self):
+        try:
+            options = uc.ChromeOptions()
+            # ua = UserAgent()
+            # user_agent = ua.random
+            # options.add_argument(f'user-agent={user_agent}')
+            # options.add_argument("start-maximized")
+            # options.add_argument("--headless")
+            # options.add_experimental_option("excludeSwitches", ["enable-automation"])
+            # options.add_experimental_option('useAutomationExtension', False)
+            # options.add_argument("--disable-blink-features=AutomationControlled")
+            # options.add_argument('--no-sandbox')
+            # options.add_argument('--ignore-certificate-errors-spki-list')
+            # options.add_argument('--ignore-ssl-errors')
+            proxy = Proxy_Formater()
+            print(f'https://{proxy.USER}:{proxy.PASS}@{proxy.HOST}:{proxy.PORT}')
+            seleniumwire_options = {
+                'proxy': {
+                    'http': f'http://{proxy.USER}:{proxy.PASS}@{proxy.HOST}:{proxy.PORT}',
+                    'https': f'https://{proxy.USER}:{proxy.PASS}@{proxy.HOST}:{proxy.PORT}',
+                    'no_proxy': 'localhost,127.0.0.1',
+                    # 'on_connection_error': on_connection_error,
+                    'suppress_connection_errors': False
+                },
+                # 'proxy': {
+                #     'http': f'https://{proxy.USER}:{proxy.PASS}@{proxy.HOST}:{proxy.PORT}',
+                #     'https': f'https://{proxy.USER}:{proxy.PASS}@{proxy.HOST}:{proxy.PORT}',
+                #     'verify_ssl': True, # it's was False
+                # },
+            }
+            # options.add_argument(f'--proxy-server=https://{proxy.USER}:{proxy.PASS}@{proxy.HOST}:{proxy.PORT}')
+            print("GETTING THE DRIVER")
+            self.driver = uc.Chrome(options=options, seleniumwire_options=seleniumwire_options)
+
+            # print("sleeping")
+            # # time.sleep(30)
+            # self.driver.get("https://www.google.com")
+            # time.sleep(10)
+            # self.driver.get("https://www.whatismyip.com/")
+            # time.sleep(199)
+            self.driver.get("https://visa.vfsglobal.com/mar/fr/prt/login")
+        except Exception as e:
+            print(f"Error {e}")
+        else:
+            print("DRIVER IS SET")
     def get_driver(self):
         # profile = webdriver.FirefoxProfile()
         # self.driver = webdriver.Firefox()
@@ -93,6 +140,7 @@ class Account:
         # options.add_experimental_option('prefs', {'profile.managed_default_content_settings.javascript': 2})
         proxy = Proxy_Formater()
         # options.add_argument(f"--proxy-server={proxy.HOST}:{proxy.PORT}")
+        print(f"http://{proxy.USER}:{proxy.PASS}@{proxy.HOST}:{proxy.PORT}")
         seleniumwire_options = {
             'proxy': {
                 'http': f'http://{proxy.USER}:{proxy.PASS}@{proxy.HOST}:{proxy.PORT}',
@@ -109,17 +157,17 @@ class Account:
         }
 
 
-        ua = UserAgent()
-        user_agent = ua.random
-        options.add_argument(f'user-agent={user_agent}')
-        options.add_argument("start-maximized")
-        # # options.add_argument("--headless")
-        options.add_experimental_option("excludeSwitches", ["enable-automation"])
-        options.add_experimental_option('useAutomationExtension', False)
-        options.add_argument("--disable-blink-features=AutomationControlled")
-        options.add_argument('--no-sandbox')
-        options.add_argument('--ignore-certificate-errors-spki-list')
-        options.add_argument('--ignore-ssl-errors')
+        # ua = UserAgent()
+        # user_agent = ua.random
+        # options.add_argument(f'user-agent={user_agent}')
+        # # options.add_argument()
+        # # # options.add_argument("--headless")
+        # options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        # options.add_experimental_option('useAutomationExtension', False)
+        # options.add_argument("--disable-blink-features=AutomationControlled")
+        # options.add_argument('--no-sandbox')
+        # options.add_argument('--ignore-certificate-errors-spki-list')
+        # options.add_argument('--ignore-ssl-errors')
         # self.driver = webdriver.Firefox(options=options,seleniumwire_options=seleniumwire_options)
         # self.driver = webdriver.Chrome(options=options)
         # self.driver = webdriver.Firefox()
@@ -142,7 +190,7 @@ class Account:
         # time.sleep(34)
         try:
             print("NOTE: GETTING THE DRIVER")
-            self.driver = webdriver.Chrome(options=options,seleniumwire_options=seleniumwire_options)
+            self.driver = uc.Chrome(options=options,seleniumwire_options=seleniumwire_options)
             stealth(self.driver,
                     languages=["en-US", "en"],
                     vendor="Google Inc.",
@@ -151,7 +199,12 @@ class Account:
                     renderer="Intel Iris OpenGL Engine",
                     fix_hairline=True,
                     )
+            # self.driver.get("https://www.whatismyip.com/")
             self.driver.get("https://visa.vfsglobal.com/mar/fr/prt/login")
+            # print("sleeping")
+            # time.sleep(20)
+
+            # time.sleep(500)
         except Exception as e:
             if "Invalid proxy server credentials supplied" in str(e):
                 print("Invalid proxy credentials supplied. Please check and try again.")
@@ -380,3 +433,6 @@ class Account:
 
 
 
+if __name__ == "__main__":
+    sp = Account()
+    sp.get_driver2()

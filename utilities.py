@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 from class_fichier import  C_Fichier
-
+import random
 #
 # driver = uc.Chrome()
 # driver.get("https://www.google.com")
@@ -187,6 +187,7 @@ class Proxy_Formater:
         self.format_ch()
     def format_ch(self):
         proxy = self.get_proxies()
+        # proxy = "162.254.2.112:5163:0KW6T:6MRKSHCH"
         if proxy!= "":
             try:
                 proxy = proxy.strip()
@@ -201,7 +202,13 @@ class Proxy_Formater:
     def get_proxies(self):
         proxies_file = C_Fichier(NF="proxies.txt")
         proxies = proxies_file.Fichier_to_Liste()
-        return proxies[0] # to edit
+        proxy = proxies[random.randint(0, len(proxies)-1)]
+        # return proxy
+        if "16" in proxy[0:2]:
+            print(proxy)
+            return proxy
+        else:
+            self.get_proxies()
 
 
 
